@@ -9,7 +9,7 @@ st.set_page_config(
 )
 
 # --- 2. FULL BACKGROUND & CUSTOM STYLING ---
-# Link to your images on GitHub
+# Note: Replace 'tyson9gmailcom' if your GitHub username is different
 github_url = "https://raw.githubusercontent.com/tyson9gmailcom/RJ-Outfits/main"
 
 st.markdown(f"""
@@ -20,7 +20,7 @@ st.markdown(f"""
         background-size: cover;
         background-position: center;
     }}
-    /* "Glass" containers so text is readable over the background */
+    /* Semi-transparent containers so text is readable */
     .glass-panel {{
         background-color: rgba(255, 255, 255, 0.85);
         padding: 30px;
@@ -37,11 +37,11 @@ st.markdown(f"""
         border-radius: 15px;
         margin-bottom: 25px;
     }}
-    h1, h2, h3 {{ color: #b22222 !important; font-weight: bold; }}
+    h1, h2, h3 {{ color: #b22222 !important; }}
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. NAVIGATION SIDEBAR ---
+# --- 3. NAVIGATION ---
 st.sidebar.title("👕 RJ OUTFITS")
 page = st.sidebar.radio("Navigate to:", ["Home", "Our Collection", "Affiliate Portal", "RJ Office"])
 
@@ -57,10 +57,10 @@ if page == "Home":
             <div class="glass-panel">
                 <h2>Look Fresh!</h2>
                 <p>Welcome to the home of premium streetwear at Bunda. We bring the latest trends directly to you.</p>
-                <p>✅ <b>Quality Fabrics</b><br>✅ <b>Exclusive Designs</b><br>✅ <b>Fast Campus Delivery</b></p>
+                <p>✅ <b>Quality Fabrics</b><br>✅ <b>Exclusive Designs</b><br>✅ <b>Campus Delivery</b></p>
                 <br>
                 <a href="https://wa.me/265994377233" style="text-decoration:none;">
-                    <button style="background-color: #b22222; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;">
+                    <button style="background-color: #b22222; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer;">
                         ORDER VIA WHATSAPP
                     </button>
                 </a>
@@ -68,32 +68,31 @@ if page == "Home":
         """, unsafe_allow_html=True)
 
 # ==========================================
-# PAGE 2: OUR COLLECTION (YOUR 5 IMAGES)
+# PAGE 2: OUR COLLECTION (THE 5 IMAGES)
 # ==========================================
 elif page == "Our Collection":
     st.markdown('<div class="main-header"><h1>OUR LATEST COLLECTION</h1></div>', unsafe_allow_html=True)
     
-    # We use a grid layout to show your 5 images beautifully
-    col_left, col_right = st.columns(2)
+    # Displaying your 5 images in a grid
+    col_a, col_b = st.columns(2)
     
-    with col_left:
-        st.image(f"{github_url}/img1.jpg", caption="Product 1", use_container_width=True)
-        st.image(f"{github_url}/img3.jpg", caption="Product 3", use_container_width=True)
-        st.image(f"{github_url}/img5.jpg", caption="Product 5", use_container_width=True)
+    with col_a:
+        st.image(f"{github_url}/img1.jpg", caption="New Arrival 1", use_container_width=True)
+        st.image(f"{github_url}/img3.jpg", caption="New Arrival 3", use_container_width=True)
+        st.image(f"{github_url}/img5.jpg", caption="Special Edition", use_container_width=True)
         
-    with col_right:
-        st.image(f"{github_url}/img2.jpg", caption="Product 2", use_container_width=True)
-        st.image(f"{github_url}/img4.jpg", caption="Product 4", use_container_width=True)
+    with col_b:
+        st.image(f"{github_url}/img2.jpg", caption="New Arrival 2", use_container_width=True)
+        st.image(f"{github_url}/img4.jpg", caption="New Arrival 4", use_container_width=True)
 
 # ==========================================
-# PAGE 3: AFFILIATE & ADMIN
+# PAGE 3: AFFILIATE & ADMIN (Basic Setup)
 # ==========================================
 elif page == "Affiliate Portal":
-    st.markdown('<div class="glass-panel"><h2>🚀 Affiliate Portal</h2><p>Login system coming soon for marketing partners.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="glass-panel"><h2>Affiliate Login</h2><p>Coming soon for our marketing partners.</p></div>', unsafe_allow_html=True)
 
 elif page == "RJ Office":
     st.markdown('<div class="glass-panel"><h2>🔐 Admin Access</h2></div>', unsafe_allow_html=True)
-    pw = st.text_input("Enter Admin Password", type="password")
+    pw = st.text_input("Enter Password", type="password")
     if pw == "RJ2026":
-        st.success("Welcome Tyson & Blessings. Business looks good today!")
-        st.info("Profit Split: 50/50 Tracking Enabled.")
+        st.success("Welcome Tyson & Blessings. Profits are split 50/50.")

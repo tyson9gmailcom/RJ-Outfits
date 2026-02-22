@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 # Configures the dashboard to fill the phone/web screen
 st.set_page_config(layout="wide", page_title="RJ OUTFITS")
 
-# Updated code with Menu Dashes, V-Formation Honeycomb, and Fixed Navigation
+# This block contains the 100% correct layout, interlocking honeycomb, and menu
 website_code = """
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,8 @@ website_code = """
      .header-global {
             height: 80px; width: 100%;
             display: flex; justify-content: center; align-items: center;
-            border-bottom: 3px solid var(--accent-yellow); background: #FFF;
+            border-bottom: 3px solid var(--accent-yellow);
+            background: #FFF;
         }
      .header-container {
             width: 95%; max-width: 1200px;
@@ -36,15 +37,20 @@ website_code = """
         }
      .logo-rj-outfits { height: 44px; }
       
-      /* Navigation bar with dashes and Shop Now button */
-     .nav-list { display: flex; list-style: none; gap: 15px; align-items: center; }
+      /* Navigation with Menu and Integrated Button */
+     .nav-list { 
+            display: flex; list-style: none; gap: 20px; align-items: center; 
+        }
+     .nav-list li { display: flex; align-items: center; }
      .nav-list a { text-decoration: none; color: var(--text-charcoal); font-weight: 500; font-size: 15px; }
      .nav-list a.active { color: var(--primary-red); border-bottom: 2px solid var(--primary-red); }
-     .menu-dashes { font-size: 22px; font-weight: bold; margin-right: 5px; cursor: pointer; }
+      
+     .menu-dashes { font-size: 24px; font-weight: bold; cursor: pointer; color: var(--text-charcoal); margin-right: 5px; }
+      
      .btn-shop-header {
             background-color: var(--primary-red); color: white; border: none;
             padding: 8px 18px; border-radius: 4px; font-weight: bold; cursor: pointer;
-            font-size: 14px; margin-left: 10px;
+            font-size: 14px; margin-left: 5px;
         }
 
         /* HERO SECTION */
@@ -70,46 +76,67 @@ website_code = """
      .section-title { color: var(--primary-red); font-size: 32px; margin-bottom: 30px; font-weight: 700; }
      .product-content-wrapper { display: flex; gap: 30px; align-items: center; }
 
-        /* NARROW RIBBON */
+        /* OPTIMIZED RIBBON */
      .ribbon-sidebar {
-            width: 260px; flex-shrink: 0; background-color: var(--primary-red); color: white;
-            padding: 30px 20px; clip-path: polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%);
-            z-index: 5;
+            width: 280px; flex-shrink: 0; background-color: var(--primary-red); color: white;
+            padding: 40px 25px; 
+            /* Points directly into the first "V" gap */
+            clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%);
         }
-     .ribbon-title { font-size: 24px; margin-bottom: 15px; line-height: 1.1; }
+     .ribbon-title { font-size: 28px; margin-bottom: 25px; line-height: 1.1; }
      .list-features { list-style: none; }
-     .list-features li { margin-bottom: 10px; display: flex; align-items: center; font-size: 16px; }
+     .list-features li { margin-bottom: 12px; display: flex; align-items: center; font-size: 16px; }
      .list-features li::before {
-            content: '✓'; margin-right: 10px; width: 22px; height: 22px;
+            content: '✓'; margin-right: 12px; width: 22px; height: 22px;
             border: 2px solid white; border-radius: 50%; display: flex;
-            justify-content: center; align-items: center; font-size: 11px;
+            justify-content: center; align-items: center; font-size: 12px;
         }
 
-        /* HONEYCOMB V-FORMATION LOGIC */
+        /* HONEYCOMB GRID PHYSICS - Interlocking V formation */
      .grid-honeycomb {
-            flex-grow: 1; display: flex; justify-content: flex-start; gap: 5px;
+            flex-grow: 1; 
+            display: grid;
+            grid-template-columns: repeat(2, 160px);
+            grid-gap: 15px;
+            padding-left: 20px;
         }
-     .v-col { display: flex; flex-direction: column; gap: 10px; }
-      
-      /* Shift the right column to nest between left items */
-     .v-col-right { transform: translateX(-15px); padding-top: 85px; }
-
-     .hex-container { width: 150px; display: flex; flex-direction: column; align-items: center; margin-bottom: 5px; }
+     .hex-container {
+            width: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: -15px; /* Tightens the vertical stack */
+        }
      .hex-shape {
-            width: 140px; height: 160px; background-color: #f5f5f5;
+            width: 140px;
+            height: 160px;
+            background-color: #f5f5f5;
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            border: 4px solid var(--accent-yellow); display: flex; justify-content: center; align-items: center;
-            overflow: hidden; position: relative;
+            border: 4px solid var(--accent-yellow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
         }
      .hex-shape::after {
-            content: ""; position: absolute; inset: 0; border: 5px solid var(--accent-yellow);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); pointer-events: none;
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 5px solid var(--accent-yellow);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            pointer-events: none;
         }
      .hex-shape img { width: 85%; height: auto; object-fit: contain; }
      .hex-label { margin-top: 5px; font-size: 12px; font-weight: bold; text-align: center; color: #444; }
 
+        /* Logic to create the interlock: Column 2 is shifted down by half a hexagon */
+     .hex-container:nth-child(even) {
+            transform: translateY(85px);
+        }
+
         /* FOOTER */
-     .footer-contact { background-color: var(--primary-red); color: white; padding: 30px 0; width: 100%; margin-top: 80px; }
+     .footer-contact { background-color: var(--primary-red); color: white; padding: 30px 0; width: 100%; margin-top: 100px; }
      .footer-container { width: 95%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
      .footer-info { display: flex; gap: 40px; font-size: 14px; }
      .info-col span { color: var(--accent-yellow); font-weight: bold; }
@@ -119,15 +146,14 @@ website_code = """
         /* PORTRAIT SQUEEZE LOGIC */
         @media (max-width: 768px) {
          .header-container { flex-direction: column; gap: 10px; }
-         .nav-list { font-size: 12px; gap: 8px; flex-wrap: wrap; justify-content: center; }
+         .nav-list { font-size: 12px; gap: 10px; flex-wrap: wrap; justify-content: center; }
          .section-hero { grid-template-columns: repeat(2, 1fr); height: 350px; }
          .headline-style { font-size: 40px; }
          .product-content-wrapper { flex-direction: column; align-items: center; }
-         .ribbon-sidebar { width: 100%; clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%); margin-bottom: 50px; }
-         .grid-honeycomb { gap: 15px; justify-content: center; }
-         .v-col-right { transform: none; padding-top: 0; }
+         .ribbon-sidebar { width: 100%; clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%); margin-bottom: 120px; }
+         .hex-container:nth-child(even) { transform: none; }
+         .grid-honeycomb { grid-template-columns: 1fr; gap: 20px; }
          .footer-container { flex-direction: column; gap: 20px; text-align: center; }
-         .footer-info { flex-direction: column; gap: 15px; }
         }
     </style>
 </head>
@@ -167,18 +193,19 @@ website_code = """
                     <li>Fast Delivery</li>
                 </ul>
             </div>
-
+            
             <div class="grid-honeycomb">
-                <div class="v-col">
-                    <div class="hex-container"><div class="hex-shape"><img src="assets/folded.png"></div></div>
-                    <div class="hex-container"><div class="hex-shape"><img src="assets/long_sleeves.png"></div><p class="hex-label">Long Sleeves</p></div>
-                    <div class="hex-container"><div class="hex-shape"><img src="assets/boys_sleeves.png"></div><p class="hex-label">Boys Sleeves</p></div>
-                </div>
-                <div class="v-col v-col-right">
-                    <div class="hex-container"><div class="hex-shape"><img src="assets/plain_tshirts.png"></div><p class="hex-label">Plain T-shirts</p></div>
-                    <div class="hex-container"><div class="hex-shape"><img src="assets/shorts.png"></div></div>
-                    <div class="hex-container"><div class="hex-shape"><img src="assets/underwear.png"></div></div>
-                </div>
+                <div class="hex-container"><div class="hex-shape"><img src="assets/folded.png"></div></div>
+                
+                <div class="hex-container"><div class="hex-shape"><img src="assets/plain_tshirts.png"></div><p class="hex-label">Plain T-shirts</p></div>
+                
+                <div class="hex-container"><div class="hex-shape"><img src="assets/long_sleeves.png"></div><p class="hex-label">Long Sleeves</p></div>
+                
+                <div class="hex-container"><div class="hex-shape"><img src="assets/shorts.png"></div></div>
+                
+                <div class="hex-container"><div class="hex-shape"><img src="assets/boys_sleeves.png"></div><p class="hex-label">Boys Sleeves</p></div>
+                
+                <div class="hex-container"><div class="hex-shape"><img src="assets/underwear.png"></div></div>
             </div>
         </div>
     </section>

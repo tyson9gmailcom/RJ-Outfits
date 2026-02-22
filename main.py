@@ -46,7 +46,6 @@ tab_menu, tab_home, tab_products, tab_about, tab_shop = st.tabs([
 # ==========================================
 with tab_menu:
     # Remove the glass-panel div and use minimal styling
-    st.markdown("<h3>Internal Portal</h3>", unsafe_allow_html=True)
     
     # Create two columns for the buttons
     col1, col2 = st.columns(2)

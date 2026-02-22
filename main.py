@@ -1,201 +1,197 @@
-import streamlit as st
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RJ OUTFITS</title>
 
-# --- 1. PAGE CONFIGURATION ---
-st.set_page_config(
-    page_title="RJ OUTFITS", 
-    page_icon="👕", 
-    layout="wide"
-)
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-# --- 2. EXACT STYLING FROM SCREENSHOT ---
-st.markdown("""
-    <style>
-    /* Completely black background */
-    .stApp {
-        background-color: black;
-    }
-    
-    /* Hide default streamlit elements */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    
-    /* Main container */
-    .main-container {
-        color: white;
-        padding: 20px;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    
-    /* Header/Navigation */
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 0;
-        border-bottom: 1px solid #333;
-    }
-    
-    .logo {
-        font-size: 28px;
-        font-weight: bold;
-        color: white;
-    }
-    
-    .nav-links {
-        display: flex;
-        gap: 40px;
-    }
-    
-    .nav-links a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        font-weight: 500;
-    }
-    
-    .nav-links a:hover {
-        color: #cccccc;
-    }
-    
-    /* Main content area */
-    .hero-section {
-        text-align: center;
-        padding: 80px 0 40px 0;
-    }
-    
-    .hero-title {
-        font-size: 48px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        letter-spacing: 2px;
-    }
-    
-    .hero-subtitle {
-        font-size: 24px;
-        color: #cccccc;
-        margin-bottom: 30px;
-    }
-    
-    .shop-now-btn {
-        background-color: transparent;
-        color: white;
-        border: 2px solid white;
-        padding: 15px 50px;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-bottom: 60px;
-        transition: all 0.3s;
-    }
-    
-    .shop-now-btn:hover {
-        background-color: white;
-        color: black;
-    }
-    
-    /* Products section */
-    .products-title {
-        font-size: 36px;
-        font-weight: bold;
-        margin: 40px 0 30px 0;
-    }
-    
-    .why-choose-title {
-        font-size: 28px;
-        font-weight: bold;
-        margin: 30px 0 20px 0;
-    }
-    
-    .features-list {
-        list-style: none;
-        padding: 0;
-    }
-    
-    .features-list li {
-        font-size: 18px;
-        margin: 15px 0;
-        color: #cccccc;
-    }
-    
-    /* Contacts section */
-    .contacts-title {
-        font-size: 28px;
-        font-weight: bold;
-        margin: 40px 0 20px 0;
-    }
-    
-    .contact-info {
-        font-size: 18px;
-        margin: 10px 0;
-        color: #cccccc;
-    }
-    
-    .location {
-        font-size: 18px;
-        margin: 20px 0;
-        color: #cccccc;
-    }
-    
-    /* Divider */
-    .divider {
-        border-top: 1px solid #333;
-        margin: 40px 0;
-    }
-    </style>
-""", unsafe_allow_html=True)
+body {
+    background: #f5f5f5;
+}
 
-# --- 3. MAIN DASHBOARD LAYOUT ---
-st.markdown("""
-<div class="main-container">
-    <!-- Header with navigation -->
-    <div class="header">
-        <div class="logo">RJ OUTFITS</div>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Products</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-            <a href="#">Shop Now</a>
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: white;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #c40000;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.btn {
+    background: #c40000;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+/* HERO */
+.hero {
+    display: flex;
+    margin: 20px;
+    background: #ddd;
+}
+
+.hero-left {
+    flex: 2;
+    background: url('https://images.unsplash.com/photo-1520975922203-b8d8d5b7c3c4') center/cover;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+
+.hero-text {
+    font-size: 40px;
+    font-weight: bold;
+    color: gold;
+}
+
+.hero-right {
+    flex: 1;
+    background: url('https://images.unsplash.com/photo-1521335629791-ce4aec67dd53') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-right button {
+    background: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+}
+
+/* PRODUCTS */
+.section {
+    padding: 30px;
+}
+
+.products {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.card img {
+    width: 100px;
+}
+
+/* WHY US */
+.why {
+    background: red;
+    color: white;
+    padding: 20px;
+    width: 250px;
+}
+
+/* FOOTER */
+.footer {
+    background: #c40000;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">RJ OUTFITS</div>
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#" class="btn">Shop Now</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-left">
+        <div class="hero-text">STYLE YOUR STORY</div>
+    </div>
+    <div class="hero-right">
+        <button>SHOP NOW</button>
+    </div>
+</div>
+
+<!-- PRODUCTS SECTION -->
+<div class="section">
+    <h2 style="color:#c40000;">Our Products</h2>
+
+    <div class="products">
+        <div class="why">
+            <h3>Why Choose Us?</h3>
+            <ul>
+                <li>Quality Fabrics</li>
+                <li>Latest Trends</li>
+                <li>Fast Delivery</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
+            <p>Plain T-shirts</p>
+        </div>
+
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
+            <p>Long Sleeves</p>
+        </div>
+
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
+            <p>Shorts</p>
         </div>
     </div>
-    
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="hero-title">STYLE YOUR STORY</div>
-        <button class="shop-now-btn">SHOP NOW</button>
-    </div>
-    
-    <!-- Our Products Section -->
-    <div class="products-title">Our Products</div>
-    
-    <!-- Why Choose Us Section -->
-    <div class="why-choose-title">Why Choose Us?</div>
-    <ul class="features-list">
-        <li>✓ Quality Fabrics</li>
-        <li>✓ Latest Trends</li>
-        <li>✓ Latest Trends</li>
-        <li>✓ Fast Delivery</li>
-    </ul>
-    
-    <!-- Divider -->
-    <div class="divider"></div>
-    
-    <!-- Contacts Section -->
-    <div class="contacts-title">Contacts:</div>
-    <div class="contact-info">✓ WhatsApp: 9994377233</div>
-    <div class="contact-info">✓ Phone Call: 0938607846</div>
-    <div class="location">✓ Location: Bunda Campus, Near Bunda COAP</div>
 </div>
-""", unsafe_allow_html=True)
 
-# --- 4. HIDDEN FUNCTIONALITY (for the menu/admin section) ---
-# This section is hidden but accessible via URL parameters or state
-if st.query_params.get("admin") == "true":
-    st.markdown("---")
-    with st.expander("Admin Panel (Hidden)"):
-        st.markdown("### Admin Login")
-        pw = st.text_input("Password", type="password")
-        if pw == "RJ2026":
-            st.success("Welcome Admin")
-            st.markdown("Dashboard access granted")
+<!-- FOOTER -->
+<div class="footer">
+    <div>
+        WhatsApp: 0999437233 <br>
+        Call: 0938607846
+    </div>
+    <div>
+        Location: Bunda Campus
+    </div>
+</div>
+
+</body>
+</html>

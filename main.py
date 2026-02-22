@@ -47,13 +47,57 @@ tab_menu, tab_home, tab_products, tab_about, tab_shop = st.tabs([
 # ==========================================
 with tab_menu:
     st.markdown('<div class="glass-panel"><h3>Internal Portal</h3></div>', unsafe_allow_html=True)
-    option = st.selectbox("Select Action:", ["Select...", "RJ Office (Admin)", "Affiliate Portal"])
-    if option == "RJ Office (Admin)":
-        pw = st.text_input("Enter Admin Password", type="password")
-        if pw == "RJ2026":
-            st.success("Welcome Tyson & Blessings. Dashboard active.")
-    elif option == "Affiliate Portal":
-        st.info("Affiliate Portal: Coming Soon.")
+    
+    # Create two columns for the buttons
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button("🏢 RJ Office (Admin)", use_container_width=True):
+            st.session_state['menu_selection'] = "admin"
+    
+    with col2:
+        if st.button("🤝 Affiliate Portal", use_container_width=True):
+            st.session_state['menu_selection'] = "affiliate"
+    
+    # Add some spacing
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Handle the selections
+    if 'menu_selection' not in st.session_state:
+        st.session_state['menu_selection'] = None
+    
+    if st.session_state['menu_selection'] == "admin":
+        with st.container():
+            st.markdown('<div class="glass-panel">', unsafe_allow_html=True)
+            st.subheader("🔐 Admin Login")
+            pw = st.text_input("Enter Admin Password", type="password", key="admin_pw")
+            if st.button("Login", key="admin_login"):
+                if pw == "RJ2026":
+                    st.success("✅ Welcome Tyson & Blessings. Dashboard active.")
+                    st.info("📊 Sales Analytics\n👕 Inventory Management\n📝 Order Processing")
+                else:
+                    st.error("❌ Incorrect password")
+            if st.button("← Back", key="back_admin"):
+                st.session_state['menu_selection'] = None
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+    
+    elif st.session_state['menu_selection'] == "affiliate":
+        with st.container():
+            st.markdown('<div class="glass-panel">', unsafe_allow_html=True)
+            st.subheader("🤝 Affiliate Portal")
+            st.info("Affiliate Program Features:")
+            st.markdown("""
+            - 📈 Track your referrals
+            - 💰 Commission earnings
+            - 🔗 Your unique affiliate links
+            - 📊 Performance dashboard
+            """)
+            st.warning("🚧 Portal is under construction. Coming soon!")
+            if st.button("← Back", key="back_affiliate"):
+                st.session_state['menu_selection'] = None
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # ==========================================
 # 🏠 HOME

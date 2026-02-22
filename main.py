@@ -9,16 +9,24 @@ st.set_page_config(
     layout="wide"
 )
 
-# Professional Styling (Red, White, Black Theme)
-st.markdown("""
+# Full Page Background Styling
+st.markdown(f"""
     <style>
-    .stApp { background-color: #FFFFFF; }
-    .main-header { background-color: #b22222; padding: 25px; text-align: center; color: white; border-radius: 10px; margin-bottom: 20px; }
-    .footer-container { background-color: #b22222; color: white; padding: 30px; text-align: center; margin-top: 50px; border-top: 5px solid #000; }
-    .stat-card { background-color: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 5px solid #b22222; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
-    .nav-btn { background-color: white; color: #b22222; border-radius: 5px; padding: 10px 20px; font-weight: bold; border: none; }
+    .stApp {{
+        background-image: url("https://raw.githubusercontent.com/tyson9gmailcom/RJ-Outfits/main/banner.jpg");
+        background-attachment: fixed;
+        background-size: cover;
+    }}
+    /* This makes your text boxes readable over the background */
+    .stMarkdown, .main-header {{
+        background-color: rgba(255, 255, 255, 0.8); 
+        padding: 20px;
+        border-radius: 15px;
+        color: black;
+    }}
     </style>
     """, unsafe_allow_html=True)
+
 
 # --- 2. DATA SYSTEM (Mock Database) ---
 # This is where your affiliate logins are stored

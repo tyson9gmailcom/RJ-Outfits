@@ -1,185 +1,395 @@
-import streamlit as st
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RJ OUTFITS | Style Your Story</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS ARCHITECTURAL SPECIFICATIONS */
+        :root {
+            --primary-red: #A51D1D;
+            --accent-yellow: #FBBF0D;
+            --bright-red: #CF2027;
+            --bg-off-white: #F5F5F5;
+            --text-charcoal: #1A1A1A;
+            --footer-red: #A51D1D;
+            --font-main: 'Roboto', sans-serif;
+            --font-hero: 'Archivo Black', sans-serif;
+        }
 
-st.set_page_config(page_title="RJ OUTFITS", layout="wide")
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-# --- CSS (FIXED PROPERLY) ---
-st.markdown("""
-<style>
+        body {
+            font-family: var(--font-main);
+            background-color: #FFFFFF;
+            color: var(--text-charcoal);
+            overflow-x: hidden;
+        }
 
-/* Background */
-.stApp {
-    background-color: #f5f5f5;
-}
+        /* I. GLOBAL HEADER */
+       .header-global {
+            height: 80px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 3px solid var(--accent-yellow);
+            background: #FFF;
+        }
 
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    background-color: white;
-}
+       .header-container {
+            width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
 
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-    color: #c40000;
-}
+       .logo-rj-outfits {
+            height: 44px; /* Exact height per report */
+        }
 
-.nav-links a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: black;
-    font-weight: 500;
-}
+       .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
 
-.shop-btn {
-    background-color: #c40000;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 5px;
-}
+       .nav-list a {
+            text-decoration: none;
+            color: var(--text-charcoal);
+            font-weight: 500;
+            font-size: 16px;
+        }
 
-/* Hero */
-.hero {
-    display: flex;
-    margin: 20px;
-}
+       .nav-list a.active {
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+        }
 
-.hero-left {
-    flex: 2;
-    background-image: url('https://images.unsplash.com/photo-1520975922203-b8d8d5b7c3c4');
-    background-size: cover;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    padding-left: 30px;
-}
+       .btn-shop-header {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
 
-.hero-text {
-    font-size: 40px;
-    font-weight: bold;
-    color: gold;
-}
+        /* II. HERO SECTION (4-PANE GRID) */
+       .section-hero {
+            position: relative;
+            height: 450px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
 
-.hero-right {
-    flex: 1;
-    background-image: url('https://images.unsplash.com/photo-1521335629791-ce4aec67dd53');
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+       .hero-pane {
+            background-size: cover;
+            background-position: center;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
 
-.hero-btn {
-    background-color: red;
-    color: white;
-    padding: 10px 20px;
-}
+        /* Image Placeholders based on GitHub naming request */
+       .pane-1 { background-image: url('assets/hero_1.jpg'); }
+       .pane-2 { background-image: url('assets/hero_2.jpg'); }
+       .pane-3 { background-image: url('assets/hero_3.jpg'); }
+       .pane-4 { 
+            background-image: url('assets/hero_4.jpg'); 
+            position: relative;
+        }
 
-/* Products */
-.section {
-    padding: 30px;
-}
+       .headline-style {
+            position: absolute;
+            top: 100px;
+            left: 15%;
+            font-family: var(--font-hero);
+            font-size: 72px;
+            line-height: 0.9;
+            color: var(--accent-yellow);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
 
-.products {
-    display: flex;
-    gap: 20px;
-}
+       .btn-hero-shop {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            background-color: var(--bright-red);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
+        /* III. PRODUCT SHOWCASE SECTION */
+       .section-products {
+            width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
-.why {
-    background: red;
-    color: white;
-    padding: 20px;
-    width: 250px;
-}
+       .section-title {
+            color: var(--primary-red);
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
 
-/* Footer */
-.footer {
-    background: #c40000;
-    color: white;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-}
+       .product-content-wrapper {
+            display: flex;
+            gap: 50px;
+        }
 
-</style>
-""", unsafe_allow_html=True)
+        /* Why Choose Us Ribbon */
+       .ribbon-sidebar {
+            width: 380px;
+            background-color: var(--primary-red);
+            color: white;
+            padding: 40px 30px;
+            /* Creates the stylized arrow shape from the image */
+            clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+        }
 
-# --- NAVBAR ---
-st.markdown("""
-<div class="navbar">
-    <div class="logo">RJ OUTFITS</div>
-    <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Products</a>
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
-        <a class="shop-btn" href="#">Shop Now</a>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+       .ribbon-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
 
-# --- HERO ---
-st.markdown("""
-<div class="hero">
-    <div class="hero-left">
-        <div class="hero-text">STYLE YOUR STORY</div>
-    </div>
-    <div class="hero-right">
-        <button class="hero-btn">SHOP NOW</button>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+       .list-features {
+            list-style: none;
+        }
 
-# --- PRODUCTS ---
-st.markdown("<h2 style='color:#c40000; padding-left:30px;'>Our Products</h2>", unsafe_allow_html=True)
+       .list-features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+        }
 
-st.markdown("""
-<div class="section">
-    <div class="products">
+       .list-features li::before {
+            content: '✓';
+            margin-right: 12px;
+            background: white;
+            color: var(--primary-red);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: bold;
+        }
 
-        <div class="why">
-            <h3>Why Choose Us?</h3>
-            <ul>
-                <li>Quality Fabrics</li>
-                <li>Latest Trends</li>
-                <li>Fast Delivery</li>
-            </ul>
+        /* Hexagonal Grid */
+       .grid-honeycomb {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 160px);
+            grid-gap: 20px;
+            padding-top: 20px;
+        }
+
+       .hex-container {
+            position: relative;
+            width: 180px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+       .hex-shape {
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            /* Hexagon Clip Path */
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            border: 4px solid var(--accent-yellow); /* Yellow border from image */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+       .hex-shape img {
+            width: 80%;
+            height: auto;
+        }
+
+       .hex-label {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Staggering the hexagons per image layout */
+       .hex-item:nth-child(even) {
+            margin-top: 50px;
+        }
+
+        /* IV. INFORMATION FOOTER */
+       .footer-contact {
+            background-color: var(--footer-red);
+            color: white;
+            padding: 30px 0;
+            width: 100%;
+            margin-top: 60px;
+        }
+
+       .footer-container {
+            width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+       .footer-info-group {
+            display: flex;
+            gap: 40px;
+            font-size: 14px;
+        }
+
+       .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+       .contact-label {
+            font-weight: bold;
+            color: var(--accent-yellow);
+            margin-bottom: 5px;
+        }
+
+       .social-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+       .social-icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-red);
+            cursor: pointer;
+        }
+
+       .icon-spark {
+            width: 30px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-global">
+        <div class="header-container">
+            <img src="assets/rj_logo.png" class="logo-rj-outfits" alt="RJ OUTFITS">
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="btn-shop-header">Shop Now</button>
         </div>
+    </header>
 
-        <div class="card">
-            <p>Plain T-shirts</p>
+    <section class="section-hero">
+        <div class="hero-pane pane-1"></div>
+        <div class="hero-pane pane-2"></div>
+        <div class="hero-pane pane-3"></div>
+        <div class="hero-pane pane-4">
+            <button class="btn-hero-shop">SHOP NOW</button>
         </div>
+        <h1 class="headline-style">STYLE<br>YOUR<br>STORY</h1>
+    </section>
 
-        <div class="card">
-            <p>Long Sleeves</p>
+    <section class="section-products">
+        <h2 class="section-title">Our Products</h2>
+        
+        <div class="product-content-wrapper">
+            <div class="ribbon-sidebar">
+                <h3 class="ribbon-title">Why Choose Us?<br>Us?</h3>
+                <ul class="list-features">
+                    <li>Quality Fabrics</li>
+                    <li>Latest Trends</li>
+                    <li>Latest Trends</li>
+                    <li>Fast Delivery</li>
+                </ul>
+            </div>
+
+            <div class="grid-honeycomb">
+                <div class="hex-container hex-item">
+                    <div class="hex-shape"><img src="assets/plain_tshirts.png" alt="Plain T-shirts"></div>
+                    <p class="hex-label">Plain T-shirts</p>
+                </div>
+                <div class="hex-container hex-item">
+                    <div class="hex-shape"><img src="assets/stack_folded.png" alt="Product"></div>
+                </div>
+                <div class="hex-container hex-item">
+                    <div class="hex-shape"><img src="assets/long_sleeves.png" alt="Long Sleeves"></div>
+                    <p class="hex-label">Long Sleeves</p>
+                </div>
+                <div class="hex-container hex-item">
+                    <div class="hex-shape"><img src="assets/shorts.png" alt="Product"></div>
+                </div>
+                <div class="hex-container hex-item">
+                    <div class="hex-shape"><img src="assets/boys_sleeves.png" alt="Boys Sleeves"></div>
+                    <p class="hex-label">Boys Sleeves</p>
+                </div>h
+                <div class="hex-container hex-item">
+                    <div class="hex-shape"><img src="assets/underwear.png" alt="Product"></div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="card">
-            <p>Shorts</p>
+    <footer class="footer-contact">
+        <div class="footer-container">
+            <div class="footer-info-group">
+                <div class="contact-item">
+                    <span class="contact-label">Contacts:</span>
+                    <span>WhatsApp: 9994371233</span>
+                    <span>Phone Call: 0938607846</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Location:</span>
+                    <span>Bunda Campus,</span>
+                    <span>Near Bunda COAP</span>
+                </div>
+            </div>
+            
+            <div class="social-icons">
+                <div class="social-icon">f</div>
+                <div class="social-icon">t</div>
+                <div class="social-icon">y</div>
+                <img src="assets/spark.svg" class="icon-spark" alt="Spark">
+            </div>
         </div>
+    </footer>
 
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-# --- FOOTER ---
-st.markdown("""
-<div class="footer">
-    <div>
-        WhatsApp: 0999437233 <br>
-        Call: 0938607846
-    </div>
-    <div>
-        Location: Bunda Campus
-    </div>
-</div>
-""", unsafe_allow_html=True)
+</body>
+</html>
+H

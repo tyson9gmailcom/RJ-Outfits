@@ -2,266 +2,200 @@ import streamlit as st
 
 # --- 1. PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="RJ OUTFITS | Official", 
+    page_title="RJ OUTFITS", 
     page_icon="👕", 
     layout="wide"
 )
 
-# --- 2. FULL BACKGROUND & CUSTOM STYLING ---
-github_url = "https://raw.githubusercontent.com/tyson9gmailcom/RJ-Outfits/main"
-
-st.markdown(f"""
+# --- 2. EXACT STYLING FROM SCREENSHOT ---
+st.markdown("""
     <style>
-    .stApp {{
-        background-image: url("{github_url}/banner.jpg");
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-    }}
+    /* Completely black background */
+    .stApp {
+        background-color: black;
+    }
     
-    /* Top Navigation Bar Styling */
-    .top-nav {{
+    /* Hide default streamlit elements */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Main container */
+    .main-container {
+        color: white;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    /* Header/Navigation */
+    .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 2rem;
-        background-color: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(5px);
-        border-radius: 10px;
-        margin: 1rem;
-    }}
+        padding: 20px 0;
+        border-bottom: 1px solid #333;
+    }
     
-    .brand {{
+    .logo {
+        font-size: 28px;
+        font-weight: bold;
         color: white;
-        font-size: 2rem;
-        font-weight: 900;
-        letter-spacing: 2px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    }}
+    }
     
-    .nav-items {{
+    .nav-links {
         display: flex;
-        gap: 2rem;
-        align-items: center;
-    }}
+        gap: 40px;
+    }
     
-    .nav-link {{
-        color: white !important;
-        font-weight: 600;
-        text-decoration: none;
-        font-size: 1.1rem;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }}
-    
-    .nav-link:hover {{
-        background-color: #b22222;
-    }}
-    
-    .menu-icon {{
+    .nav-links a {
         color: white;
-        font-size: 1.5rem;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    
+    .nav-links a:hover {
+        color: #cccccc;
+    }
+    
+    /* Main content area */
+    .hero-section {
+        text-align: center;
+        padding: 80px 0 40px 0;
+    }
+    
+    .hero-title {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+    }
+    
+    .hero-subtitle {
+        font-size: 24px;
+        color: #cccccc;
+        margin-bottom: 30px;
+    }
+    
+    .shop-now-btn {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+        padding: 15px 50px;
+        font-size: 20px;
+        font-weight: bold;
         cursor: pointer;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-    }}
+        margin-bottom: 60px;
+        transition: all 0.3s;
+    }
     
-    .menu-icon:hover {{
-        background-color: #b22222;
-    }}
+    .shop-now-btn:hover {
+        background-color: white;
+        color: black;
+    }
     
-    /* Content Area Styling */
-    .content-area {{
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 2rem;
-        border-radius: 15px;
-        margin: 1rem;
-        color: #000000;
-    }}
+    /* Products section */
+    .products-title {
+        font-size: 36px;
+        font-weight: bold;
+        margin: 40px 0 30px 0;
+    }
     
-    /* Glass panel for special sections */
-    .glass-panel {{
-        background-color: rgba(255, 255, 255, 0.85);
-        padding: 30px;
-        border-radius: 15px;
-        color: #000000;
-        margin-top: 20px;
-    }}
+    .why-choose-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 30px 0 20px 0;
+    }
     
-    /* Hide default streamlit elements */
-    #MainMenu {{visibility: hidden;}}
-    footer {{visibility: hidden;}}
-    header {{visibility: hidden;}}
+    .features-list {
+        list-style: none;
+        padding: 0;
+    }
     
-    /* Hide the default tabs */
-    .stTabs [data-baseweb="tab-list"] {{
-        display: none;
-    }}
+    .features-list li {
+        font-size: 18px;
+        margin: 15px 0;
+        color: #cccccc;
+    }
+    
+    /* Contacts section */
+    .contacts-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 40px 0 20px 0;
+    }
+    
+    .contact-info {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #cccccc;
+    }
+    
+    .location {
+        font-size: 18px;
+        margin: 20px 0;
+        color: #cccccc;
+    }
+    
+    /* Divider */
+    .divider {
+        border-top: 1px solid #333;
+        margin: 40px 0;
+    }
     </style>
-    
-    <!-- Top Navigation Bar -->
-    <div class="top-nav">
-        <div class="brand">RJ OUTFITS</div>
-        <div class="nav-items">
-            <a class="nav-link" onclick="document.querySelectorAll('[data-baseweb=tab]')[0].click()">Home</a>
-            <a class="nav-link" onclick="document.querySelectorAll('[data-baseweb=tab]')[1].click()">Products</a>
-            <a class="nav-link" onclick="document.querySelectorAll('[data-baseweb=tab]')[2].click()">About Us</a>
-            <a class="nav-link" onclick="document.querySelectorAll('[data-baseweb=tab]')[3].click()">Contact</a>
-            <a class="nav-link" onclick="document.querySelectorAll('[data-baseweb=tab]')[4].click()">Shop Now</a>
-            <span class="menu-icon" onclick="document.querySelectorAll('[data-baseweb=tab]')[5].click()">☰</span>
+""", unsafe_allow_html=True)
+
+# --- 3. MAIN DASHBOARD LAYOUT ---
+st.markdown("""
+<div class="main-container">
+    <!-- Header with navigation -->
+    <div class="header">
+        <div class="logo">RJ OUTFITS</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Products</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Shop Now</a>
         </div>
     </div>
-    """, unsafe_allow_html=True)
-
-# --- 3. HIDDEN TABS FOR NAVIGATION (Behind the scenes) ---
-tab_home, tab_products, tab_about, tab_contact, tab_shop, tab_menu = st.tabs([
-    "Home", "Products", "About Us", "Contact", "Shop Now", "Menu"
-])
-
-# ==========================================
-# 🏠 HOME
-# ==========================================
-with tab_home:
-    st.markdown("""
-        <div class="content-area" style="text-align:center;">
-            <h2 style="color:#b22222;">Style Your Story</h2>
-            <p style="font-size:1.2rem;">Premium quality streetwear designed for the student lifestyle.</p>
-            <p>Based at Bunda Campus, Malawi</p>
-            <br>
-            <h3>Look Fresh Every Day</h3>
-            <p>Discover our latest collection of urban fashion essentials.</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-# ==========================================
-# 🛍️ PRODUCTS (With Prices)
-# ==========================================
-with tab_products:
-    st.markdown('<div class="content-area"><h2 style="text-align:center;">Our Collection</h2></div>', unsafe_allow_html=True)
-    wa_link = "https://wa.me/265994377233?text=I%20am%20interested%20in%20"
     
-    col1, col2 = st.columns(2)
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-title">STYLE YOUR STORY</div>
+        <button class="shop-now-btn">SHOP NOW</button>
+    </div>
     
-    with col1:
-        st.image(f"{github_url}/img1.jpg", use_container_width=True)
-        st.markdown("**Premium Tee - MK 15,000**")
-        st.markdown(f"[![Order](https://img.shields.io/badge/Order-WhatsApp-25D366?style=for-the-badge)]({wa_link}Premium%20Tee)")
-        st.divider()
-        st.image(f"{github_url}/img3.jpg", use_container_width=True)
-        st.markdown("**Urban Hoodie - MK 25,000**")
-        st.markdown(f"[![Order](https://img.shields.io/badge/Order-WhatsApp-25D366?style=for-the-badge)]({wa_link}Urban%20Hoodie)")
+    <!-- Our Products Section -->
+    <div class="products-title">Our Products</div>
     
-    with col2:
-        st.image(f"{github_url}/img2.jpg", use_container_width=True)
-        st.markdown("**Exclusive Cap - MK 10,000**")
-        st.markdown(f"[![Order](https://img.shields.io/badge/Order-WhatsApp-25D366?style=for-the-badge)]({wa_link}Exclusive%20Cap)")
-        st.divider()
-        st.image(f"{github_url}/img4.jpg", use_container_width=True)
-        st.markdown("**Street Joggers - MK 20,000**")
-        st.markdown(f"[![Order](https://img.shields.io/badge/Order-WhatsApp-25D366?style=for-the-badge)]({wa_link}Street%20Joggers)")
+    <!-- Why Choose Us Section -->
+    <div class="why-choose-title">Why Choose Us?</div>
+    <ul class="features-list">
+        <li>✓ Quality Fabrics</li>
+        <li>✓ Latest Trends</li>
+        <li>✓ Latest Trends</li>
+        <li>✓ Fast Delivery</li>
+    </ul>
+    
+    <!-- Divider -->
+    <div class="divider"></div>
+    
+    <!-- Contacts Section -->
+    <div class="contacts-title">Contacts:</div>
+    <div class="contact-info">✓ WhatsApp: 9994377233</div>
+    <div class="contact-info">✓ Phone Call: 0938607846</div>
+    <div class="location">✓ Location: Bunda Campus, Near Bunda COAP</div>
+</div>
+""", unsafe_allow_html=True)
 
-# ==========================================
-# 📖 ABOUT US
-# ==========================================
-with tab_about:
-    st.markdown("""
-        <div class="content-area">
-            <h2>About RJ OUTFITS</h2>
-            <p>Founded by <b>Tyson & Blessings</b> at Bunda Campus, Malawi.</p>
-            <p>We're on a mission to bring premium streetwear to students, combining comfort with style.</p>
-            <h3>Our Vision</h3>
-            <p>To become Malawi's leading student fashion brand, known for quality and authenticity.</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-# ==========================================
-# 📞 CONTACT
-# ==========================================
-with tab_contact:
-    st.markdown("""
-        <div class="content-area">
-            <h2>Contact Us</h2>
-            <p>📍 <b>Location:</b> Bunda Campus, Malawi</p>
-            <p>📞 <b>Phone:</b> +265 994 377 233</p>
-            <p>📧 <b>Email:</b> rjoutfits@bunda.mw</p>
-            <p>⏰ <b>Hours:</b> Mon-Fri: 9am - 5pm</p>
-            <br>
-            <h3>Follow Us</h3>
-            <p>📱 Instagram: @rj.outfits</p>
-            <p>📱 Facebook: RJ Outfits Malawi</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-# ==========================================
-# 🛒 SHOP NOW
-# ==========================================
-with tab_shop:
-    st.markdown("""
-        <div class="content-area" style="text-align:center;">
-            <h2>Ready to Order?</h2>
-            <p>Click the button below to chat with us on WhatsApp</p>
-            <a href="https://wa.me/265994377233" style="text-decoration:none;">
-                <button style="background-color: #25D366; color: white; border: none; padding: 20px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.2rem;">
-                    💬 CHAT ON WHATSAPP
-                </button>
-            </a>
-        </div>
-    """, unsafe_allow_html=True)
-
-# ==========================================
-# 📂 MENU (Admin & Affiliate) - Three Dashes Icon
-# ==========================================
-with tab_menu:
-    st.markdown('<div class="content-area">', unsafe_allow_html=True)
-    st.markdown("### 📋 Menu Options")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if st.button("🏢 RJ Office (Admin)", use_container_width=True):
-            st.session_state['menu_selection'] = "admin"
-    
-    with col2:
-        if st.button("🤝 Affiliate Portal", use_container_width=True):
-            st.session_state['menu_selection'] = "affiliate"
-    
+# --- 4. HIDDEN FUNCTIONALITY (for the menu/admin section) ---
+# This section is hidden but accessible via URL parameters or state
+if st.query_params.get("admin") == "true":
     st.markdown("---")
-    
-    if 'menu_selection' not in st.session_state:
-        st.session_state['menu_selection'] = None
-    
-    if st.session_state['menu_selection'] == "admin":
-        st.markdown("### 🔐 Admin Login")
-        pw = st.text_input("Enter Admin Password", type="password", key="admin_pw")
-        
-        col1, col2 = st.columns([1, 5])
-        with col1:
-            if st.button("Login", key="admin_login"):
-                if pw == "RJ2026":
-                    st.success("✅ Welcome Tyson & Blessings. Dashboard active.")
-                else:
-                    st.error("❌ Incorrect password")
-        
-        with col2:
-            if st.button("← Back", key="back_admin"):
-                st.session_state['menu_selection'] = None
-                st.rerun()
-    
-    elif st.session_state['menu_selection'] == "affiliate":
-        st.markdown("### 🤝 Affiliate Portal")
-        st.info("Affiliate Program Features:")
-        st.markdown("""
-        - 📈 Track your referrals
-        - 💰 Commission earnings
-        - 🔗 Your unique affiliate links
-        - 📊 Performance dashboard
-        """)
-        st.warning("🚧 Portal is under construction. Coming soon!")
-        
-        if st.button("← Back to Menu", key="back_affiliate"):
-            st.session_state['menu_selection'] = None
-            st.rerun()
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.expander("Admin Panel (Hidden)"):
+        st.markdown("### Admin Login")
+        pw = st.text_input("Password", type="password")
+        if pw == "RJ2026":
+            st.success("Welcome Admin")
+            st.markdown("Dashboard access granted")

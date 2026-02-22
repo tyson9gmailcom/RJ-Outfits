@@ -1,29 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RJ OUTFITS</title>
+import streamlit as st
 
+st.set_page_config(page_title="RJ OUTFITS", layout="wide")
+
+# --- CSS (FIXED PROPERLY) ---
+st.markdown("""
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+
+/* Background */
+.stApp {
+    background-color: #f5f5f5;
 }
 
-body {
-    background: #f5f5f5;
-}
-
-/* NAVBAR */
+/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
-    background: white;
+    background-color: white;
 }
 
 .logo {
@@ -32,34 +26,30 @@ body {
     color: #c40000;
 }
 
-.nav-links {
-    display: flex;
-    gap: 25px;
-}
-
 .nav-links a {
+    margin: 0 15px;
     text-decoration: none;
     color: black;
     font-weight: 500;
 }
 
-.btn {
-    background: #c40000;
+.shop-btn {
+    background-color: #c40000;
     color: white;
     padding: 8px 15px;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
-/* HERO */
+/* Hero */
 .hero {
     display: flex;
     margin: 20px;
-    background: #ddd;
 }
 
 .hero-left {
     flex: 2;
-    background: url('https://images.unsplash.com/photo-1520975922203-b8d8d5b7c3c4') center/cover;
+    background-image: url('https://images.unsplash.com/photo-1520975922203-b8d8d5b7c3c4');
+    background-size: cover;
     height: 300px;
     display: flex;
     align-items: center;
@@ -74,20 +64,20 @@ body {
 
 .hero-right {
     flex: 1;
-    background: url('https://images.unsplash.com/photo-1521335629791-ce4aec67dd53') center/cover;
+    background-image: url('https://images.unsplash.com/photo-1521335629791-ce4aec67dd53');
+    background-size: cover;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.hero-right button {
-    background: red;
+.hero-btn {
+    background-color: red;
     color: white;
     padding: 10px 20px;
-    border: none;
 }
 
-/* PRODUCTS */
+/* Products */
 .section {
     padding: 30px;
 }
@@ -104,11 +94,6 @@ body {
     text-align: center;
 }
 
-.card img {
-    width: 100px;
-}
-
-/* WHY US */
 .why {
     background: red;
     color: white;
@@ -116,7 +101,7 @@ body {
     width: 250px;
 }
 
-/* FOOTER */
+/* Footer */
 .footer {
     background: #c40000;
     color: white;
@@ -124,12 +109,12 @@ body {
     display: flex;
     justify-content: space-between;
 }
+
 </style>
-</head>
+""", unsafe_allow_html=True)
 
-<body>
-
-<!-- NAVBAR -->
+# --- NAVBAR ---
+st.markdown("""
 <div class="navbar">
     <div class="logo">RJ OUTFITS</div>
     <div class="nav-links">
@@ -137,25 +122,30 @@ body {
         <a href="#">Products</a>
         <a href="#">About Us</a>
         <a href="#">Contact</a>
-        <a href="#" class="btn">Shop Now</a>
+        <a class="shop-btn" href="#">Shop Now</a>
     </div>
 </div>
+""", unsafe_allow_html=True)
 
-<!-- HERO -->
+# --- HERO ---
+st.markdown("""
 <div class="hero">
     <div class="hero-left">
         <div class="hero-text">STYLE YOUR STORY</div>
     </div>
     <div class="hero-right">
-        <button>SHOP NOW</button>
+        <button class="hero-btn">SHOP NOW</button>
     </div>
 </div>
+""", unsafe_allow_html=True)
 
-<!-- PRODUCTS SECTION -->
+# --- PRODUCTS ---
+st.markdown("<h2 style='color:#c40000; padding-left:30px;'>Our Products</h2>", unsafe_allow_html=True)
+
+st.markdown("""
 <div class="section">
-    <h2 style="color:#c40000;">Our Products</h2>
-
     <div class="products">
+
         <div class="why">
             <h3>Why Choose Us?</h3>
             <ul>
@@ -166,23 +156,23 @@ body {
         </div>
 
         <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
             <p>Plain T-shirts</p>
         </div>
 
         <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
             <p>Long Sleeves</p>
         </div>
 
         <div class="card">
-            <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
             <p>Shorts</p>
         </div>
+
     </div>
 </div>
+""", unsafe_allow_html=True)
 
-<!-- FOOTER -->
+# --- FOOTER ---
+st.markdown("""
 <div class="footer">
     <div>
         WhatsApp: 0999437233 <br>
@@ -192,6 +182,4 @@ body {
         Location: Bunda Campus
     </div>
 </div>
-
-</body>
-</html>
+""", unsafe_allow_html=True)

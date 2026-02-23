@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 # Configures the dashboard to fill the phone/web screen
 st.set_page_config(layout="wide", page_title="RJ OUTFITS")
 
-# Final website code with Refined Honeycomb (Labels Removed) and Pentagon Plug-in
+# Final website code with Minimalist Honeycomb (All labels removed) and Pentagon Plug-in
 website_code = """
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +68,7 @@ website_code = """
      .section-products { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 60px 0; }
      .section-title { color: var(--primary-red); font-size: 36px; margin-bottom: 40px; text-align: center; }
 
-        /* CENTERED PENTAGON - Plugs into Cluster Gaps */
+        /* CENTERED PENTAGON - Optimized Profile */
      .pentagon-info {
             width: 280px; background-color: var(--primary-red); color: white;
             padding: 30px 20px; margin-bottom: -40px;
@@ -86,7 +86,7 @@ website_code = """
 
         /* INTERLOCKING HONEYCOMB CLUSTER */
      .honeycomb-cluster {
-            position: relative; width: 450px; height: 400px;
+            position: relative; width: 450px; height: 350px;
             display: flex; flex-direction: column; align-items: center;
             margin-top: 40px;
         }
@@ -108,9 +108,8 @@ website_code = """
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         }
      .hex-shape img { width: 80%; height: auto; object-fit: contain; }
-     .hex-label { margin-top: 5px; font-size: 11px; font-weight: bold; color: #444; }
 
-        /* V-Shape Physics and Interlocking Gaps */
+        /* V-Shape Formation and Interlock Logic */
      .row-top.hex-middle { transform: translateY(40px); }
      .row-bottom { margin-top: -30px; }
      .row-bottom.hex-middle { transform: translateY(-40px); }
@@ -123,7 +122,7 @@ website_code = """
      .social-icons { display: flex; gap: 15px; align-items: center; }
      .social-circle { width: 32px; height: 32px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--primary-red); font-weight: bold; }
 
-        /* PORTRAIT MOBILE SQUEEZE */
+        /* PORTRAIT SQUEEZE LOGIC */
         @media (max-width: 768px) {
          .header-container { flex-direction: column; gap: 10px; }
          .section-hero { grid-template-columns: repeat(2, 1fr); height: 350px; }
@@ -190,7 +189,6 @@ website_code = """
                 </div>
                 <div class="hex-item hex-middle">
                     <div class="hex-shape"><img src="assets/boys_sleeves.png"></div>
-                    <p class="hex-label">Boys Sleeves</p>
                 </div>
                 <div class="hex-item">
                     <div class="hex-shape"><img src="assets/underwear.png"></div>

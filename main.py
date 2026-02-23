@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 # Configures the dashboard to fill the phone/web screen
 st.set_page_config(layout="wide", page_title="RJ OUTFITS")
 
-# Final website code with Minimalist Honeycomb (All labels removed) and Pentagon Plug-in
+# Updated website code with 3-2-1 Centered Pyramid Honeycomb and Minimalist UI
 website_code = """
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +68,7 @@ website_code = """
      .section-products { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 60px 0; }
      .section-title { color: var(--primary-red); font-size: 36px; margin-bottom: 40px; text-align: center; }
 
-        /* CENTERED PENTAGON - Optimized Profile */
+        /* CENTERED PENTAGON - Plugs into Cluster Gaps */
      .pentagon-info {
             width: 280px; background-color: var(--primary-red); color: white;
             padding: 30px 20px; margin-bottom: -40px;
@@ -84,14 +84,13 @@ website_code = """
             justify-content: center; align-items: center; font-size: 10px;
         }
 
-        /* INTERLOCKING HONEYCOMB CLUSTER */
+        /* CENTERED 3-2-1 PYRAMID CLUSTER */
      .honeycomb-cluster {
-            position: relative; width: 450px; height: 350px;
             display: flex; flex-direction: column; align-items: center;
-            margin-top: 40px;
+            margin-top: 40px; width: 100%;
         }
 
-     .hex-row { display: flex; justify-content: center; gap: 4px; }
+     .hex-row { display: flex; justify-content: center; gap: 4px; width: 100%; }
      .hex-item {
             width: 140px; height: 160px; position: relative;
             display: flex; flex-direction: column; align-items: center;
@@ -109,10 +108,9 @@ website_code = """
         }
      .hex-shape img { width: 80%; height: auto; object-fit: contain; }
 
-        /* V-Shape Formation and Interlock Logic */
-     .row-top.hex-middle { transform: translateY(40px); }
-     .row-bottom { margin-top: -30px; }
-     .row-bottom.hex-middle { transform: translateY(-40px); }
+        /* Interlock Calculation: -35px vertical pull to stack the points */
+     .row-2 { margin-top: -35px; }
+     .row-3 { margin-top: -35px; }
 
         /* FOOTER */
      .footer-contact { background-color: var(--primary-red); color: white; padding: 30px 0; width: 100%; margin-top: 100px; }
@@ -125,6 +123,7 @@ website_code = """
         /* PORTRAIT SQUEEZE LOGIC */
         @media (max-width: 768px) {
          .header-container { flex-direction: column; gap: 10px; }
+         .nav-list { font-size: 12px; gap: 10px; flex-wrap: wrap; justify-content: center; }
          .section-hero { grid-template-columns: repeat(2, 1fr); height: 350px; }
          .headline-style { font-size: 40px; }
          .honeycomb-cluster { transform: scale(0.85); width: 100%; }
@@ -171,28 +170,19 @@ website_code = """
         </div>
 
         <div class="honeycomb-cluster">
-            <div class="hex-row row-top">
-                <div class="hex-item">
-                    <div class="hex-shape"><img src="assets/folded.png"></div>
-                </div>
-                <div class="hex-item hex-middle">
-                    <div class="hex-shape"><img src="assets/plain_tshirts.png"></div>
-                </div>
-                <div class="hex-item">
-                    <div class="hex-shape"><img src="assets/long_sleeves.png"></div>
-                </div>
+            <div class="hex-row row-1">
+                <div class="hex-item"><div class="hex-shape"><img src="assets/folded.png"></div></div>
+                <div class="hex-item"><div class="hex-shape"><img src="assets/plain_tshirts.png"></div></div>
+                <div class="hex-item"><div class="hex-shape"><img src="assets/long_sleeves.png"></div></div>
             </div>
 
-            <div class="hex-row row-bottom">
-                <div class="hex-item">
-                    <div class="hex-shape"><img src="assets/shorts.png"></div>
-                </div>
-                <div class="hex-item hex-middle">
-                    <div class="hex-shape"><img src="assets/boys_sleeves.png"></div>
-                </div>
-                <div class="hex-item">
-                    <div class="hex-shape"><img src="assets/underwear.png"></div>
-                </div>
+            <div class="hex-row row-2">
+                <div class="hex-item"><div class="hex-shape"><img src="assets/shorts.png"></div></div>
+                <div class="hex-item"><div class="hex-shape"><img src="assets/boys_sleeves.png"></div></div>
+            </div>
+
+            <div class="hex-row row-3">
+                <div class="hex-item"><div class="hex-shape"><img src="assets/underwear.png"></div></div>
             </div>
         </div>
     </section>

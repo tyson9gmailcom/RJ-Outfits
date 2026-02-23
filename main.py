@@ -204,4 +204,3 @@ website_code = """
 
 # Renders the website code into your dashboard environment
 components.html(website_code, height=2000, scrolling=True)
-

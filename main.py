@@ -180,7 +180,7 @@ website_code = """
 
             <div class="hex-row row-bottom">
                 <div class="hex-item"><div class="hex-shape"><img src="assets/shorts.png"></div></div>
-                <div class="hex-item hex-middle"><div class="hex-shape"><img src="assets/boys_sleeves.png"></div><p class="hex-label">Boys Sleeves</p></div>
+                
                 <div class="hex-item"><div class="hex-shape"><img src="assets/underwear.png"></div></div>
             </div>
         </div>

@@ -1,12 +1,11 @@
-Import streamlit as st
+import streamlit as st
 import streamlit.components.v1 as components
 
 # Configures the dashboard to fill the phone/web screen
 st.set_page_config(layout="wide", page_title="RJ OUTFITS")
 
-# Updated website code with 3-2-1 Centered Pyramid Honeycomb and Minimalist UI
-website_code = """
-<!DOCTYPE html>
+# --- SECTION 1: STYLES ---
+html_start = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -133,6 +132,10 @@ website_code = """
     </style>
 </head>
 <body>
+"""
+
+# --- SECTION 2: HEADER ---
+header_block = """
     <header class="header-global">
         <div class="header-container">
             <img src="assets/rj_logo.png" class="logo-rj-outfits" alt="Logo">
@@ -148,7 +151,10 @@ website_code = """
             </nav>
         </div>
     </header>
+"""
 
+# --- SECTION 3: HERO ---
+hero_block = """
     <section class="section-hero">
         <div class="hero-pane pane-1"></div>
         <div class="hero-pane pane-2"></div>
@@ -156,7 +162,10 @@ website_code = """
         <div class="hero-pane pane-4"><button class="btn-hero-shop">SHOP NOW</button></div>
         <h1 class="headline-style">STYLE<br>YOUR<br>STORY</h1>
     </section>
+"""
 
+# --- SECTION 4: PRODUCTS (HoneyComb) ---
+products_block = """
     <section class="section-products">
         <h2 class="section-title">Our Products</h2>
         
@@ -186,7 +195,10 @@ website_code = """
             </div>
         </div>
     </section>
+"""
 
+# --- SECTION 5: FOOTER ---
+footer_block = """
     <footer class="footer-contact">
         <div class="footer-container">
             <div class="footer-info">
@@ -201,6 +213,10 @@ website_code = """
 </body>
 </html>
 """
+
+# --- FINAL ASSEMBLY ---
+# To add something new, just create a new variable and drop it in this list!
+website_code = html_start + header_block + hero_block + products_block + footer_block
 
 # Renders the website code into your dashboard environment
 components.html(website_code, height=2000, scrolling=True)

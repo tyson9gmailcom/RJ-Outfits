@@ -212,6 +212,143 @@ footer_block = """
     </footer>
 </body>
 </html>
+import pandas as pd
+import os
+import urllib.parse
+from PIL import Image
+
+# --- 1. PERSISTENCE & IMAGE STORAGE ---
+INVENTORY_FILE = "inventory.csv"
+ORDERS_FILE = "orders.csv"
+UPLOAD_DIR = "assets"
+
+# Ensure the assets folder exists to store uploaded images
+if not os.path.exists(UPLOAD_DIR):
+    os.makedirs(UPLOAD_DIR)
+
+def load_data():
+    if os.path.exists(INVENTORY_FILE):
+        return pd.read_csv(INVENTORY_FILE).to_dict('records')
+    else:
+        # Default starting stock if no file exists
+        return [
+            {"id": 1, "name": "Plain T-Shirt", "price": 15000, "stock": 10, "img": "assets/plain_tshirts.png"},
+            {"id": 2, "name": "Long Sleeves", "price": 25000, "stock": 5, "img": "assets/long_sleeves.png"},
+        ]
+
+def save_all():
+    pd.DataFrame(st.session_state.inventory).to_csv(INVENTORY_FILE, index=False)
+    pd.DataFrame(st.session_state.orders, columns=["Order Details"]).to_csv(ORDERS_FILE, index=False)
+
+# Initialize Session State
+if 'inventory' not in st.session_state:
+    st.session_state.inventory = load_data()
+if 'orders' not in st.session_state:
+    if os.path.exists(ORDERS_FILE):
+        st.session_state.orders = pd.read_csv(ORDERS_FILE)["Order Details"].tolist()
+    else:
+        st.session_state.orders = []
+
+# --- 2. THE INTERFACE ---
+st.markdown("---") # Visual separator from your HTML Hero section
+app_mode = st.sidebar.radio("Navigate Store", ["Shop Now", "RJ Office (Admin)"])
+
+# --- SHOP NOW TAB ---
+if app_mode == "Shop Now":
+    st.header("🛍️ Available Stock")
+    whatsapp_number = "2659994371233" 
+    
+    # Display products in a 3-column grid
+    cols = st.columns(3)
+    for i, item in enumerate(st.session_state.inventory):
+        with cols[i % 3]:
+            # Error handling for missing images
+            if os.path.exists(str(item['img'])):
+                st.image(item['img'], use_container_width=True)
+            else:
+                st.warning("📷 Image coming soon")
+                
+            st.subheader(item['name'])
+            st.write(f"💰 **Price:** MK {item['price']:,}")
+            st.write(f"📦 **In Stock:** {item['stock']}")
+            
+            if item['stock'] > 0:
+                if st.button(f"Buy Now: {item['name']}", key=f"btn_{item['id']}"):
+                    # Update stock and save
+                    item['stock'] -= 1
+                    order_note = f"Order: {item['name']} @ MK {item['price']:,}"
+                    st.session_state.orders.append(order_note)
+                    save_all()
+                    
+                    # WhatsApp Link Generation
+                    msg = f"Hi RJ Outfits! I want to buy {item['name']} for MK {item['price']:,}. Please provide payment details for Agent Code."
+                    wa_url = f"https://wa.me/{whatsapp_number}?text={urllib.parse.quote(msg)}"
+                    
+                    st.success("Item reserved!")
+                    st.markdown(f'<a href="{wa_url}" target="_blank"><button style="background-color:#25D366; color:white; border:none; padding:12px; width:100%; border-radius:8px; font-weight:bold; cursor:pointer;">Pay via WhatsApp (Mpamba/TNM)</button></a>', unsafe_allow_html=True)
+            else:
+                st.error("Out of Stock")
+
+# --- RJ OFFICE (ADMIN) TAB ---
+elif app_mode == "RJ Office (Admin)":
+    st.title("🛡️ RJ Office Control Center")
+    password = st.text_input("Admin Access Code", type="password")
+    
+    if password == "RJ2024":
+        tab1, tab2, tab3 = st.tabs(["Sales Notifications", "Manage Stock", "Add New Product"])
+        
+        with tab1:
+            st.subheader("🔔 Recent Orders")
+            if st.session_state.orders:
+                for order in reversed(st.session_state.orders):
+                    st.info(order)
+                if st.button("Clear History"):
+                    st.session_state.orders = []; save_all(); st.rerun()
+            else:
+                st.write("No sales yet today.")
+        
+        with tab2:
+            st.subheader("📝 Edit or Remove Stock")
+            for i, item in enumerate(st.session_state.inventory):
+                with st.expander(f"Edit {item['name']}"):
+                    st.session_state.inventory[i]['stock'] = st.number_input(f"Stock for {item['name']}", value=item['stock'], key=f"inv_{i}")
+                    st.session_state.inventory[i]['price'] = st.number_input(f"Price (MK) for {item['name']}", value=item['price'], key=f"prc_{i}")
+                    
+                    if st.button(f"Delete {item['name']}", key=f"del_{i}"):
+                        st.session_state.inventory.pop(i)
+                        save_all()
+                        st.rerun()
+            
+            if st.button("Save All Edits"):
+                save_all(); st.success("Database updated!")
+
+        with tab3:
+            st.subheader("➕ Add New Item to Shop")
+            with st.form("add_form", clear_on_submit=True):
+                new_name = st.text_input("Product Name")
+                new_price = st.number_input("Price (MK)", min_value=0)
+                new_stock = st.number_input("Initial Stock", min_value=1)
+                uploaded_file = st.file_uploader("Upload Product Image", type=["jpg", "png", "jpeg"])
+                submit = st.form_submit_button("List Product")
+
+                if submit:
+                    if uploaded_file and new_name:
+                        # Save the image file locally
+                        img_path = os.path.join(UPLOAD_DIR, uploaded_file.name)
+                        with open(img_path, "wb") as f:
+                            f.write(uploaded_file.getbuffer())
+                        
+                        # Add to inventory
+                        new_id = len(st.session_state.inventory) + 1
+                        st.session_state.inventory.append({
+                            "id": new_id, "name": new_name, "price": new_price, "stock": new_stock, "img": img_path
+                        })
+                        save_all()
+                        st.success(f"{new_name} is now live!")
+                        st.rerun()
+                    else:
+                        st.error("Please provide both a name and an image.")
+
 """
 
 # --- FINAL ASSEMBLY ---
@@ -221,71 +358,5 @@ website_code = html_start + header_block + hero_block + products_block + footer_
 # Renders the website code into your dashboard environment
 components.html(website_code, height=2000, scrolling=True)
 
-import streamlit as st
-
-# --- DATABASE SIMULATION ---
-# In a real app, you'd link this to a CSV or SQL database
-if 'inventory' not in st.session_state:
-    st.session_state.inventory = [
-        {"id": 1, "name": "Plain T-Shirt", "price": 15000, "stock": 10, "img": "assets/plain_tshirts.png"},
-        {"id": 2, "name": "Long Sleeves", "price": 25000, "stock": 5, "img": "assets/long_sleeves.png"},
-        {"id": 3, "name": "RJ Underwear", "price": 8000, "stock": 20, "img": "assets/underwear.png"},
-    ]
-
-if 'orders' not in st.session_state:
-    st.session_state.orders = []
-
-# --- NAVIGATION ---
-menu = st.sidebar.selectbox("Menu", ["Storefront", "RJ Office (Admin)"])
-
-# --- SECTION: STOREFRONT ---
-if menu == "Storefront":
-    st.header("🛍️ Shop Our Collection")
-    cols = st.columns(3)
-
-    for i, item in enumerate(st.session_state.inventory):
-        with cols[i % 3]:
-            st.image(item['img'], use_container_width=True)
-            st.subheader(item['name'])
-            st.write(f"**Price:** MK {item['price']:,}")
-            st.write(f"**In Stock:** {item['stock']}")
-            
-            if item['stock'] > 0:
-                if st.button(f"Buy Now: {item['name']}", key=f"buy_{item['id']}"):
-                    # Logic to decrease stock
-                    item['stock'] -= 1
-                    # Log the order
-                    st.session_state.orders.append(f"New Order: {item['name']} - MK {item['price']}")
-                    st.success(f"Order Placed! Please pay via Mpamba/TNM using Agent Code: 554433")
-                    st.info("Direct Payment: Dial *444# (TNM) or *150# (Mpamba)")
-            else:
-                st.error("Out of Stock")
-
-# --- SECTION: RJ OFFICE (ADMIN) ---
-elif menu == "RJ Office (Admin)":
-    password = st.text_input("Enter Admin Password", type="password")
-    if password == "RJ2024": # Simple security check
-        st.title("👨‍💼 RJ Office Dashboard")
-        
-        # 1. Notifications
-        st.subheader("🔔 Recent Sales Notifications")
-        if st.session_state.orders:
-            for order in st.session_state.orders:
-                st.write(order)
-        else:
-            st.write("No new sales yet.")
-
-        st.divider()
-
-        # 2. Inventory Management
-        st.subheader("📦 Update Stock & Prices")
-        for i, item in enumerate(st.session_state.inventory):
-            with st.expander(f"Edit {item['name']}"):
-                new_stock = st.number_input(f"Stock for {item['name']}", value=item['stock'], key=f"st_{i}")
-                new_price = st.number_input(f"Price (MK) for {item['name']}", value=item['price'], key=f"pr_{i}")
-                
-                if st.button(f"Save Changes for {item['name']}"):
-                    st.session_state.inventory[i]['stock'] = new_stock
-                    st.session_state.inventory[i]['price'] = new_price
-                    st.rerun()
-
+ 
+ 

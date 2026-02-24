@@ -220,3 +220,72 @@ website_code = html_start + header_block + hero_block + products_block + footer_
 
 # Renders the website code into your dashboard environment
 components.html(website_code, height=2000, scrolling=True)
+
+import streamlit as st
+
+# --- DATABASE SIMULATION ---
+# In a real app, you'd link this to a CSV or SQL database
+if 'inventory' not in st.session_state:
+    st.session_state.inventory = [
+        {"id": 1, "name": "Plain T-Shirt", "price": 15000, "stock": 10, "img": "assets/plain_tshirts.png"},
+        {"id": 2, "name": "Long Sleeves", "price": 25000, "stock": 5, "img": "assets/long_sleeves.png"},
+        {"id": 3, "name": "RJ Underwear", "price": 8000, "stock": 20, "img": "assets/underwear.png"},
+    ]
+
+if 'orders' not in st.session_state:
+    st.session_state.orders = []
+
+# --- NAVIGATION ---
+menu = st.sidebar.selectbox("Menu", ["Storefront", "RJ Office (Admin)"])
+
+# --- SECTION: STOREFRONT ---
+if menu == "Storefront":
+    st.header("🛍️ Shop Our Collection")
+    cols = st.columns(3)
+
+    for i, item in enumerate(st.session_state.inventory):
+        with cols[i % 3]:
+            st.image(item['img'], use_container_width=True)
+            st.subheader(item['name'])
+            st.write(f"**Price:** MK {item['price']:,}")
+            st.write(f"**In Stock:** {item['stock']}")
+            
+            if item['stock'] > 0:
+                if st.button(f"Buy Now: {item['name']}", key=f"buy_{item['id']}"):
+                    # Logic to decrease stock
+                    item['stock'] -= 1
+                    # Log the order
+                    st.session_state.orders.append(f"New Order: {item['name']} - MK {item['price']}")
+                    st.success(f"Order Placed! Please pay via Mpamba/TNM using Agent Code: 554433")
+                    st.info("Direct Payment: Dial *444# (TNM) or *150# (Mpamba)")
+            else:
+                st.error("Out of Stock")
+
+# --- SECTION: RJ OFFICE (ADMIN) ---
+elif menu == "RJ Office (Admin)":
+    password = st.text_input("Enter Admin Password", type="password")
+    if password == "RJ2024": # Simple security check
+        st.title("👨‍💼 RJ Office Dashboard")
+        
+        # 1. Notifications
+        st.subheader("🔔 Recent Sales Notifications")
+        if st.session_state.orders:
+            for order in st.session_state.orders:
+                st.write(order)
+        else:
+            st.write("No new sales yet.")
+
+        st.divider()
+
+        # 2. Inventory Management
+        st.subheader("📦 Update Stock & Prices")
+        for i, item in enumerate(st.session_state.inventory):
+            with st.expander(f"Edit {item['name']}"):
+                new_stock = st.number_input(f"Stock for {item['name']}", value=item['stock'], key=f"st_{i}")
+                new_price = st.number_input(f"Price (MK) for {item['name']}", value=item['price'], key=f"pr_{i}")
+                
+                if st.button(f"Save Changes for {item['name']}"):
+                    st.session_state.inventory[i]['stock'] = new_stock
+                    st.session_state.inventory[i]['price'] = new_price
+                    st.rerun()
+

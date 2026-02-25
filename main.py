@@ -1,4 +1,7 @@
-Import streamlit as st
+
+
+
+import streamlit as st
 import streamlit.components.v1 as components
 
 # Configures the dashboard to fill the phone/web screen
@@ -219,4 +222,4 @@ footer_block = """
 website_code = html_start + header_block + hero_block + products_block + footer_block
 
 # Renders the website code into your dashboard environment
-components.html(website_code, height=2000, scrolling=True) 
+components.html(website_code, height=2000, scrolling=True)
